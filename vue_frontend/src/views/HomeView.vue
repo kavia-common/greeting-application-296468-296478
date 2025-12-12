@@ -5,8 +5,12 @@ const greeting = ref<string>('')
 const loading = ref<boolean>(false)
 const error = ref<string | null>(null)
 
-// Determine API base dynamically using current hostname and port 3001
-const apiBase = `http://${window.location.hostname}:3001`
+/**
+ * Determine API base:
+ * - If VITE_API_BASE is defined (e.g., https://my-host:3001), use that.
+ * - Otherwise default to http://<current-hostname>:3001
+ */
+const apiBase = import.meta.env.VITE_API_BASE ?? `http://${window.location.hostname}:3001`
 
 async function fetchGreeting() {
   loading.value = true
